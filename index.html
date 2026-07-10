@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5-Minute Crypto — Signal Scoreboard</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050C18;--surf:#081422;--border:#0F2040;--brite:#1B3561;
+  --cyan:#00D4F5;--green:#0FD982;--red:#FF4D6A;--warn:#F59E0B;
+  --t1:#E2EAF8;--t2:#7890B5;--t3:#3D5580;
+  --mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+  --sans:system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+html,body{background:var(--bg);color:var(--t1);font-family:var(--sans);
+  font-size:14px;line-height:1.5;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px 60px}
+.topbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 0;
+  border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;
+  letter-spacing:.08em;color:var(--t3)}
+.brand{font-size:12px;font-weight:600;letter-spacing:.2em;color:var(--t1)}
+.brand span{color:var(--cyan)}
+.topbar .spacer{flex:1}
+.pill{padding:2px 10px;border:1px solid var(--warn);font-size:10px;
+  letter-spacing:.14em;color:var(--warn)}
+.intro{border:1px solid var(--border);background:var(--surf);padding:14px 17px;
+  margin:18px 0;font-size:12px;color:var(--t2);line-height:1.7}
+.intro b{color:var(--t1)}
+.panel{background:var(--surf);border:1px solid var(--border);
+  padding:17px 19px;margin-bottom:14px}
+.ptag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--t2);
+  margin-bottom:12px;text-transform:uppercase;display:flex;
+  justify-content:space-between;flex-wrap:wrap;gap:6px}
+.ptag .asset{color:var(--cyan);font-weight:700}
+.ptag em{font-style:normal;color:var(--t3);font-size:10px;letter-spacing:.04em;
+  text-transform:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:8px;margin-bottom:15px}
+.tile{background:var(--bg);border:1px solid var(--border);padding:11px 12px}
+.tlabel{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--t3);
+  text-transform:uppercase;margin-bottom:5px}
+.tval{font-family:var(--mono);font-size:22px;font-weight:600;line-height:1;
+  font-variant-numeric:tabular-nums}
+.tsub{font-size:10px;color:var(--t3);margin-top:4px}
+.tval.green{color:var(--green)}.tval.red{color:var(--red)}
+.tval.white{color:var(--t1)}.tval.neu{color:var(--t2)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.clabel{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  color:var(--t2);margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--t3);
+  text-transform:uppercase;font-weight:500;padding:4px 8px;
+  border-bottom:1px solid var(--border);text-align:left}
+td{font-family:var(--mono);font-size:12px;color:var(--t2);padding:6px 8px;
+  border-bottom:1px solid var(--border)}
+td:first-child{color:var(--t1);font-weight:500}
+td.pos{color:var(--green)}td.neg{color:var(--red)}td.neu{color:var(--t2)}
+.empty{font-family:var(--mono);font-size:11px;color:var(--t3);
+  padding:13px 0;letter-spacing:.06em}
+.chartbox{position:relative}
+.chartbox canvas{width:100%;height:auto;display:block;cursor:crosshair}
+.tip{position:absolute;display:none;pointer-events:none;background:var(--bg);
+  border:1px solid var(--brite);padding:4px 8px;font-family:var(--mono);
+  font-size:10px;color:var(--t1);white-space:nowrap;z-index:2}
+.footer{font-family:var(--mono);font-size:10px;color:var(--t3);
+  letter-spacing:.08em;padding-top:18px;border-top:1px solid var(--border);
+  line-height:1.8}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+
+<div class="topbar">
+  <span class="brand">5-MIN CRYPTO <span>/</span> SCOREBOARD</span>
+  <span class="spacer"></span>
+  <span class="pill">PAPER TRADING</span>
+  <span>updated 2026-07-19 17:33 PT</span>
+</div>
+
+<div class="intro">
+  A bot watches Polymarket's 5-minute "will BTC/SOL/XRP go up or down"
+  markets around the clock and paper-trades nine different signals with
+  imaginary $10 bets at real quoted prices.
+  <b>No real money is at stake and nothing here is financial advice.</b>
+  "Breakeven" is the average price paid for our side of the market — the
+  win rate has to beat it before a signal earns anything. Every number on
+  this page is the honest, unfiltered record, cold streaks included.
+</div>
+
+<div class="panel">
+  <div class="ptag"><span class="asset">BTC</span> Bitcoin · 5-minute up/down markets
+    <em>5,575 windows observed</em></div>
+  <div class="tiles">
+    <div class="tile">
+  <div class="tlabel">Win rate</div>
+  <div class="tval green">52.2%</div>
+  <div class="tsub">1,822 bets · lead signal</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Breakeven</div>
+  <div class="tval white">50.0%</div>
+  <div class="tsub">avg market price paid</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Edge</div>
+  <div class="tval green">+2.2 pts</div>
+  <div class="tsub">win rate minus breakeven</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Paper P&amp;L</div>
+  <div class="tval green">$+806</div>
+  <div class="tsub">$10 flat per bet</div>
+</div>
+  </div>
+  <div class="cols">
+    <div>
+      <div class="clabel">LAST 94 BETS — rolling result, lead signal</div>
+      <div class="chartbox">
+        <canvas class="roll" data-roll='[1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0]' width="480" height="150"></canvas>
+        <div class="tip"></div>
+      </div>
+      <div class="clabel" style="margin-top:16px">RECENT DAYS — lead signal</div>
+      <table><tr><th>day</th><th>bets</th><th>win rate</th><th>p&amp;l</th></tr><tr><td>2026-07-19</td><td>78</td><td>51%</td><td class='pos'>$+21</td></tr><tr><td>2026-07-18</td><td>103</td><td>47%</td><td class='neg'>$-66</td></tr><tr><td>2026-07-17</td><td>90</td><td>49%</td><td class='neg'>$-20</td></tr><tr><td>2026-07-16</td><td>97</td><td>48%</td><td class='neg'>$-29</td></tr><tr><td>2026-07-15</td><td>93</td><td>53%</td><td class='pos'>$+48</td></tr><tr><td>2026-07-14</td><td>95</td><td>57%</td><td class='pos'>$+132</td></tr><tr><td>2026-07-13</td><td>103</td><td>46%</td><td class='neg'>$-93</td></tr><tr><td>2026-07-12</td><td>109</td><td>58%</td><td class='pos'>$+174</td></tr><tr><td>2026-07-11</td><td>64</td><td>58%</td><td class='pos'>$+104</td></tr><tr><td>2026-07-10</td><td>110</td><td>47%</td><td class='neg'>$-61</td></tr><tr><td>2026-07-09</td><td>98</td><td>55%</td><td class='pos'>$+104</td></tr><tr><td>2026-07-08</td><td>86</td><td>51%</td><td class='pos'>$+14</td></tr><tr><td>2026-07-07</td><td>92</td><td>55%</td><td class='pos'>$+106</td></tr><tr><td>2026-07-06</td><td>106</td><td>53%</td><td class='pos'>$+58</td></tr></table>
+    </div>
+    <div>
+      <div class="clabel">ALL SIGNALS WE TRACK (★ = the one we'd trade)</div>
+      <table><tr><th>signal</th><th>win rate</th><th>bets</th><th>paper p&amp;l</th></tr><tr><td>vol_reversion</td><td class='pos'>53.3%</td><td>2,555</td><td class='pos'>$+1,653</td></tr><tr><td>rev_disagree ★</td><td class='pos'>52.2%</td><td>1,822</td><td class='pos'>$+806</td></tr><tr><td>rev_confirmed</td><td class='pos'>52.2%</td><td>2,476</td><td class='pos'>$+963</td></tr><tr><td>rsi_reversion</td><td class='pos'>51.9%</td><td>3,449</td><td class='pos'>$+1,164</td></tr><tr><td>reversion_5m</td><td class='pos'>51.4%</td><td>5,574</td><td class='pos'>$+1,538</td></tr><tr><td>momentum_1m</td><td class='neu'>50.4%</td><td>5,574</td><td class='pos'>$+563</td></tr><tr><td>body_momentum</td><td class='neu'>50.1%</td><td>3,938</td><td class='pos'>$+106</td></tr><tr><td>combined</td><td class='neg'>49.3%</td><td>3,599</td><td class='neg'>$-454</td></tr><tr><td>momentum_5m</td><td class='neg'>48.6%</td><td>5,574</td><td class='neg'>$-1,472</td></tr></table>
+    </div>
+  </div>
+</div>
+<div class="panel">
+  <div class="ptag"><span class="asset">SOL</span> Solana · 5-minute up/down markets
+    <em>3,050 windows observed</em></div>
+  <div class="tiles">
+    <div class="tile">
+  <div class="tlabel">Win rate</div>
+  <div class="tval red">49.2%</div>
+  <div class="tsub">1,136 bets · lead signal</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Breakeven</div>
+  <div class="tval white">50.0%</div>
+  <div class="tsub">avg market price paid</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Edge</div>
+  <div class="tval red">-0.8 pts</div>
+  <div class="tsub">win rate minus breakeven</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Paper P&amp;L</div>
+  <div class="tval red">$-193</div>
+  <div class="tsub">$10 flat per bet</div>
+</div>
+  </div>
+  <div class="cols">
+    <div>
+      <div class="clabel">LAST 65 BETS — rolling result, lead signal</div>
+      <div class="chartbox">
+        <canvas class="roll" data-roll='[0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0]' width="480" height="150"></canvas>
+        <div class="tip"></div>
+      </div>
+      <div class="clabel" style="margin-top:16px">RECENT DAYS — lead signal</div>
+      <table><tr><th>day</th><th>bets</th><th>win rate</th><th>p&amp;l</th></tr><tr><td>2026-07-19</td><td>85</td><td>49%</td><td class='neg'>$-13</td></tr><tr><td>2026-07-18</td><td>109</td><td>52%</td><td class='pos'>$+46</td></tr><tr><td>2026-07-17</td><td>124</td><td>44%</td><td class='neg'>$-141</td></tr><tr><td>2026-07-16</td><td>112</td><td>48%</td><td class='neg'>$-47</td></tr><tr><td>2026-07-15</td><td>99</td><td>53%</td><td class='pos'>$+47</td></tr><tr><td>2026-07-14</td><td>102</td><td>49%</td><td class='neg'>$-23</td></tr><tr><td>2026-07-13</td><td>92</td><td>43%</td><td class='neg'>$-119</td></tr><tr><td>2026-07-12</td><td>107</td><td>51%</td><td class='pos'>$+33</td></tr><tr><td>2026-07-11</td><td>79</td><td>54%</td><td class='pos'>$+76</td></tr><tr><td>2026-07-10</td><td>106</td><td>49%</td><td class='neg'>$-22</td></tr><tr><td>2026-07-09</td><td>102</td><td>49%</td><td class='neg'>$-20</td></tr><tr><td>2026-07-08</td><td>19</td><td>47%</td><td class='neg'>$-11</td></tr></table>
+    </div>
+    <div>
+      <div class="clabel">ALL SIGNALS WE TRACK (★ = the one we'd trade)</div>
+      <table><tr><th>signal</th><th>win rate</th><th>bets</th><th>paper p&amp;l</th></tr><tr><td>vol_reversion</td><td class='pos'>50.8%</td><td>2,153</td><td class='pos'>$+310</td></tr><tr><td>reversion_5m</td><td class='pos'>50.7%</td><td>3,049</td><td class='pos'>$+397</td></tr><tr><td>rev_confirmed</td><td class='neu'>50.2%</td><td>1,291</td><td class='neg'>$-21</td></tr><tr><td>rsi_reversion</td><td class='neu'>50.0%</td><td>1,710</td><td class='neg'>$-91</td></tr><tr><td>momentum_5m</td><td class='neg'>49.3%</td><td>3,049</td><td class='neg'>$-392</td></tr><tr><td>rev_disagree ★</td><td class='neg'>49.2%</td><td>1,136</td><td class='neg'>$-193</td></tr><tr><td>momentum_1m</td><td class='neg'>48.7%</td><td>3,049</td><td class='neg'>$-771</td></tr><tr><td>combined</td><td class='neg'>48.5%</td><td>1,913</td><td class='neg'>$-578</td></tr><tr><td>body_momentum</td><td class='neg'>47.7%</td><td>1,965</td><td class='neg'>$-926</td></tr></table>
+    </div>
+  </div>
+</div>
+<div class="panel">
+  <div class="ptag"><span class="asset">XRP</span> XRP · 5-minute up/down markets
+    <em>3,049 windows observed</em></div>
+  <div class="tiles">
+    <div class="tile">
+  <div class="tlabel">Win rate</div>
+  <div class="tval red">47.8%</div>
+  <div class="tsub">1,139 bets · lead signal</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Breakeven</div>
+  <div class="tval white">50.1%</div>
+  <div class="tsub">avg market price paid</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Edge</div>
+  <div class="tval red">-2.3 pts</div>
+  <div class="tsub">win rate minus breakeven</div>
+</div>
+    <div class="tile">
+  <div class="tlabel">Paper P&amp;L</div>
+  <div class="tval red">$-518</div>
+  <div class="tsub">$10 flat per bet</div>
+</div>
+  </div>
+  <div class="cols">
+    <div>
+      <div class="clabel">LAST 68 BETS — rolling result, lead signal</div>
+      <div class="chartbox">
+        <canvas class="roll" data-roll='[0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0]' width="480" height="150"></canvas>
+        <div class="tip"></div>
+      </div>
+      <div class="clabel" style="margin-top:16px">RECENT DAYS — lead signal</div>
+      <table><tr><th>day</th><th>bets</th><th>win rate</th><th>p&amp;l</th></tr><tr><td>2026-07-19</td><td>90</td><td>42%</td><td class='neg'>$-142</td></tr><tr><td>2026-07-18</td><td>119</td><td>48%</td><td class='neg'>$-65</td></tr><tr><td>2026-07-17</td><td>98</td><td>49%</td><td class='neg'>$-21</td></tr><tr><td>2026-07-16</td><td>110</td><td>43%</td><td class='neg'>$-156</td></tr><tr><td>2026-07-15</td><td>110</td><td>52%</td><td class='pos'>$+37</td></tr><tr><td>2026-07-14</td><td>102</td><td>50%</td><td class='neg'>$-2</td></tr><tr><td>2026-07-13</td><td>100</td><td>55%</td><td class='pos'>$+101</td></tr><tr><td>2026-07-12</td><td>111</td><td>44%</td><td class='neg'>$-131</td></tr><tr><td>2026-07-11</td><td>69</td><td>54%</td><td class='pos'>$+46</td></tr><tr><td>2026-07-10</td><td>103</td><td>40%</td><td class='neg'>$-214</td></tr><tr><td>2026-07-09</td><td>109</td><td>52%</td><td class='pos'>$+49</td></tr><tr><td>2026-07-08</td><td>18</td><td>44%</td><td class='neg'>$-21</td></tr></table>
+    </div>
+    <div>
+      <div class="clabel">ALL SIGNALS WE TRACK (★ = the one we'd trade)</div>
+      <table><tr><th>signal</th><th>win rate</th><th>bets</th><th>paper p&amp;l</th></tr><tr><td>rsi_reversion</td><td class='pos'>51.0%</td><td>1,795</td><td class='pos'>$+275</td></tr><tr><td>rev_confirmed</td><td class='pos'>50.8%</td><td>1,358</td><td class='pos'>$+170</td></tr><tr><td>vol_reversion</td><td class='neu'>50.2%</td><td>1,593</td><td class='pos'>$+31</td></tr><tr><td>reversion_5m</td><td class='neu'>50.1%</td><td>3,048</td><td class='pos'>$+51</td></tr><tr><td>momentum_5m</td><td class='neu'>49.9%</td><td>3,048</td><td class='neg'>$-61</td></tr><tr><td>combined</td><td class='neg'>48.5%</td><td>1,909</td><td class='neg'>$-566</td></tr><tr><td>momentum_1m</td><td class='neg'>48.3%</td><td>3,048</td><td class='neg'>$-1,085</td></tr><tr><td>rev_disagree ★</td><td class='neg'>47.8%</td><td>1,139</td><td class='neg'>$-518</td></tr><tr><td>body_momentum</td><td class='neg'>47.8%</td><td>2,022</td><td class='neg'>$-879</td></tr></table>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>paper record only · real quoted Polymarket prices · $10 flat stakes ·
+  win/loss graded on market resolution · this page regenerates every few minutes</span>
+</div>
+
+</div>
+
+<script>
+// Rolling win-rate chart per asset: 50-bet rolling WR over the last ~100
+// live-signal bets, with crosshair + tooltip on hover.
+document.querySelectorAll('.chartbox').forEach(box => {
+  const cv   = box.querySelector('canvas.roll');
+  const tip  = box.querySelector('.tip');
+  const raw  = JSON.parse(cv.dataset.roll);          // 1/0 per bet
+  if (raw.length < 5) {
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#3D5580'; ctx.font = '11px ui-monospace,monospace';
+    ctx.fillText('collecting data…', 16, 30);
+    return;
+  }
+  const roll = raw.map((_, i) => {
+    const w = raw.slice(Math.max(0, i - 49), i + 1);
+    return w.reduce((a, b) => a + b, 0) / w.length * 100;
+  });
+  const W = cv.width, H = cv.height, lo = 20, hi = 90;
+  const px = i => 16 + i * (W - 32) / (roll.length - 1);
+  const py = v => 12 + (hi - v) * (H - 30) / (hi - lo);
+
+  function draw(hoverI) {
+    const ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+    const y50 = py(50);
+    ctx.strokeStyle = '#1B3561'; ctx.lineWidth = 1; ctx.setLineDash([4, 5]);
+    ctx.beginPath(); ctx.moveTo(16, y50); ctx.lineTo(W - 16, y50); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#3D5580'; ctx.font = '10px ui-monospace,monospace';
+    ctx.textAlign = 'right'; ctx.fillText('50%', W - 18, y50 - 4);
+    const grd = ctx.createLinearGradient(0, 0, 0, H);
+    grd.addColorStop(0, 'rgba(0,212,245,.18)');
+    grd.addColorStop(1, 'rgba(0,212,245,0)');
+    ctx.beginPath(); ctx.moveTo(px(0), py(roll[0]));
+    roll.forEach((v, i) => ctx.lineTo(px(i), py(v)));
+    ctx.lineTo(px(roll.length - 1), H); ctx.lineTo(px(0), H);
+    ctx.closePath(); ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.strokeStyle = '#00D4F5'; ctx.lineWidth = 1.5;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    roll.forEach((v, i) => { i ? ctx.lineTo(px(i), py(v)) : ctx.moveTo(px(i), py(v)); });
+    ctx.stroke();
+    const li = hoverI == null ? roll.length - 1 : hoverI;
+    const lv = roll[li], ex = px(li), ey = py(lv);
+    if (hoverI != null) {
+      ctx.strokeStyle = '#1B3561'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(ex, 8); ctx.lineTo(ex, H - 14); ctx.stroke();
+    }
+    const dotColor = lv < 50 ? '#FF4D6A' : '#0FD982';
+    ctx.fillStyle = dotColor;
+    ctx.beginPath(); ctx.arc(ex, ey, 4, 0, Math.PI * 2); ctx.fill();
+    if (hoverI == null) {
+      ctx.font = 'bold 11px ui-monospace,monospace'; ctx.textAlign = 'right';
+      ctx.fillText(lv.toFixed(1) + '%', ex - 8, ey - 7);
+    }
+  }
+  draw(null);
+
+  cv.addEventListener('mousemove', e => {
+    const r = cv.getBoundingClientRect();
+    const x = (e.clientX - r.left) * (W / r.width);
+    const i = Math.max(0, Math.min(roll.length - 1,
+      Math.round((x - 16) / ((W - 32) / (roll.length - 1)))));
+    draw(i);
+    tip.textContent = `bet ${i + 1} of ${roll.length} · rolling WR ${roll[i].toFixed(1)}%`;
+    tip.style.display = 'block';
+    const bx = (px(i) / W) * r.width;
+    tip.style.left = Math.min(bx + 10, r.width - 150) + 'px';
+    tip.style.top = '6px';
+  });
+  cv.addEventListener('mouseleave', () => { tip.style.display = 'none'; draw(null); });
+});
+</script>
+</body></html>
